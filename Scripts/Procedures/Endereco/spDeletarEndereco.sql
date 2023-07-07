@@ -1,0 +1,7 @@
+CREATE PROCEDURE spDeletarEndereco
+    @Id UNIQUEIDENTIFIER
+AS
+BEGIN
+    DELETE FROM [Enderecos]
+    WHERE [Id] = @Id
+END

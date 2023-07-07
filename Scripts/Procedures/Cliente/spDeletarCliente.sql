@@ -1,0 +1,7 @@
+CREATE PROCEDURE spDeletarCliente
+    @Id UNIQUEIDENTIFIER
+AS
+BEGIN
+    DELETE FROM [Clientes]
+    WHERE [Id] = @Id
+END

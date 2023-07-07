@@ -3,6 +3,8 @@ using System.Data.SqlClient;
 
 namespace geradoc_v2 {
     public class Database {
+        public SqlConnection Connection { get; set; }
+
         public Database() {
             try {
                 Connection = new SqlConnection(Settings.StringConnection);
@@ -12,8 +14,6 @@ namespace geradoc_v2 {
                 Console.WriteLine($"Failed to connect to the database: {ex.Message}");
             }  
         }
-
-        public SqlConnection Connection { get; set; }
 
         public void Dispose() {
             if (Connection.State != ConnectionState.Closed)

@@ -19,16 +19,6 @@ namespace geradoc_v2.Controllers {
                    .Query<ClienteExibirLista>("SELECT c.[Id], CONCAT(c.[PrimeiroNome], ' ', c.[Sobrenome]) AS [Nome], c.[Email], c.[CpfCnpj], c.[Telefone], c.[Rg], c.[OrgaoEmissor], c.[Nacionalidade], c.[EstadoCivil], c.[Profissao], CONCAT(e.[Cidade], ' - ', e.[Estado]) AS [Cidade_Estado], CONCAT(e.[Rua], ', ', e.[Numero], ', ', e.[Complemento], ', ', e.[Bairro], ', ', e.[Cep] ) AS [Endereco] FROM [Clientes] c INNER JOIN [Enderecos] e ON c.[Id] = e.[ClienteId];");
         }
 
-        //listar clientes com quantidade de blocos
-        [HttpGet("v1/clients/blocks/qtd")]
-        public ClienteQuantidadeBlocos GetOneWithBlocksQuantity(string cpf) {
-            return _context
-                   .Connection
-                   .Query<ClienteQuantidadeBlocos>("spClienteBlocosQuantidade", new {
-                       Cpf = cpf
-                   }).FirstOrDefault();
-        }
-
         //listar um
         [HttpGet("v1/client/{id}")]
         public ClienteExibirLista GetOne(Guid id) {
@@ -160,5 +150,35 @@ namespace geradoc_v2.Controllers {
 
             }
         }
+
+        //deletar um
+        [HttpDelete("v1/client/{id}")]
+        public object DeleteClient(Guid id) {
+            try {
+                // exclui o usuario do banco de dados usando a stored procedure
+                _context.Connection.Execute("spDeletarCliente", new {
+                    Id = id
+                }, commandType: System.Data.CommandType.StoredProcedure);
+
+                return "Block deleted successfully!";
+            } catch {
+                return BadRequest("There is an Client using this Block");
+
+            }
+        }
+
     }
+
+
+
+    ////listar clientes com quantidade de blocos
+    //[HttpGet("v1/client/{cpf}")]
+    //public ClienteQuantidadeBlocos GetOneWithBlocksQuantity(string cpf) {
+    //    return _context
+    //           .Connection
+    //           .Query<ClienteQuantidadeBlocos>("spClienteBlocosQuantidade", new {
+    //               Cpf = cpf
+    //           }).FirstOrDefault();
+    //}
+
 }

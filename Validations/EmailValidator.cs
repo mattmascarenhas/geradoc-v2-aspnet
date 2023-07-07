@@ -14,6 +14,16 @@ namespace geradoc_v2.Validations {
             return emailChecked;
         }
 
+        public static bool CheckEmailUser(Database _context, string email) {
 
+            bool emailChecked = _context
+                     .Connection
+                     .Query<bool>("spChecarEmailUsuario", new {
+                         Email = email
+                     }, commandType: System.Data.CommandType.StoredProcedure)
+                     .FirstOrDefault();
+
+            return emailChecked;
+        }
     }
 }

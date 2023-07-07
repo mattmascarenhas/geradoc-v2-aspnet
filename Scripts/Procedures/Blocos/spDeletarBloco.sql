@@ -1,0 +1,7 @@
+CREATE PROCEDURE spDeletarBloco
+    @Id UNIQUEIDENTIFIER
+AS
+BEGIN
+    DELETE FROM [Blocos]
+    WHERE [Id] = @Id
+END

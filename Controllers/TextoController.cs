@@ -68,5 +68,21 @@ namespace geradoc_v2.Controllers {
                 return BadRequest($"Error: {ex.Message}");
             }
         }
+
+        //deletar um
+        [HttpDelete("v1/text/{id}")]
+        public object DeleteText(Guid id) {
+            try {
+                // exclui o usuario do banco de dados usando a stored procedure
+                _context.Connection.Execute("spDeletarTexto", new {
+                    Id = id
+                }, commandType: System.Data.CommandType.StoredProcedure);
+
+                return "Text deleted successfully!";
+            } catch {
+                return BadRequest("There is an Block using this Text");
+
+            }
+        }
     }
 }

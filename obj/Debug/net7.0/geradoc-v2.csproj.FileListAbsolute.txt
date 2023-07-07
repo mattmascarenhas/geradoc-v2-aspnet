@@ -32,3 +32,11 @@ D:\CSharp\geradoc-v2\obj\Debug\net7.0\refint\geradoc-v2.dll
 D:\CSharp\geradoc-v2\obj\Debug\net7.0\geradoc-v2.pdb
 D:\CSharp\geradoc-v2\obj\Debug\net7.0\geradoc-v2.genruntimeconfig.cache
 D:\CSharp\geradoc-v2\obj\Debug\net7.0\ref\geradoc-v2.dll
+D:\CSharp\geradoc-v2\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\CSharp\geradoc-v2\bin\Debug\net7.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\CSharp\geradoc-v2\bin\Debug\net7.0\Microsoft.IdentityModel.Logging.dll
+D:\CSharp\geradoc-v2\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.dll
+D:\CSharp\geradoc-v2\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\CSharp\geradoc-v2\bin\Debug\net7.0\Microsoft.IdentityModel.Tokens.dll
+D:\CSharp\geradoc-v2\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll
+D:\CSharp\geradoc-v2\bin\Debug\net7.0\System.Security.Permissions.dll
