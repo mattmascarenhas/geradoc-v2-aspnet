@@ -1,7 +1,5 @@
 ﻿using Dapper;
-using Geradoc.Domain.Entidades;
 using geradoc_v2.Queries;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using geradoc_v2.Validations;
 using geradoc_v2.Entities;
@@ -21,6 +19,16 @@ namespace geradoc_v2.Controllers {
                    .Query<ClienteExibirLista>("SELECT c.[Id], CONCAT(c.[PrimeiroNome], ' ', c.[Sobrenome]) AS [Nome], c.[Email], c.[CpfCnpj], c.[Telefone], c.[Rg], c.[OrgaoEmissor], c.[Nacionalidade], c.[EstadoCivil], c.[Profissao], CONCAT(e.[Cidade], ' - ', e.[Estado]) AS [Cidade_Estado], CONCAT(e.[Rua], ', ', e.[Numero], ', ', e.[Complemento], ', ', e.[Bairro], ', ', e.[Cep] ) AS [Endereco] FROM [Clientes] c INNER JOIN [Enderecos] e ON c.[Id] = e.[ClienteId];");
         }
 
+        //listar clientes com quantidade de blocos
+        [HttpGet("v1/clients/blocks/qtd")]
+        public ClienteQuantidadeBlocos GetOneWithBlocksQuantity(string cpf) {
+            return _context
+                   .Connection
+                   .Query<ClienteQuantidadeBlocos>("spClienteBlocosQuantidade", new {
+                       Cpf = cpf
+                   }).FirstOrDefault();
+        }
+
         //listar um
         [HttpGet("v1/client/{id}")]
         public ClienteExibirLista GetOne(Guid id) {
@@ -31,6 +39,7 @@ namespace geradoc_v2.Controllers {
                    }).FirstOrDefault();
         }
 
+        //criar um
         [HttpPost("v1/client")]
         public object NewClient([FromBody] Cliente _cliente) {
             //verifica se o email ja existe
@@ -93,6 +102,7 @@ namespace geradoc_v2.Controllers {
                 return BadRequest($"Error: {ex.Message}");
             }
         }
+        //editar
         [HttpPut("v1/client/{id}")]
         public object EditClient(Guid id, [FromBody] Cliente _cliente) {
             try {
@@ -149,8 +159,6 @@ namespace geradoc_v2.Controllers {
                 return BadRequest($"Error: {ex.Message}");
 
             }
-
-
         }
     }
 }

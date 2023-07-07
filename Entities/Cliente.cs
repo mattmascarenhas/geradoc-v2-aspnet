@@ -1,6 +1,6 @@
 ﻿using geradoc_v2.Entities.Shared;
 
-namespace Geradoc.Domain.Entidades {
+namespace geradoc_v2.Entities {
     public class Cliente: Entity {
         //private readonly IList<Endereco> _enderecos;
 
@@ -21,7 +21,6 @@ namespace Geradoc.Domain.Entidades {
 
         public string PrimeiroNome { get; private set; }
         public string Sobrenome { get; private set; }
-
         public string CpfCnpj { get; private set; }
         public string Email { get; private set; }
         public int Rg { get; private set; }

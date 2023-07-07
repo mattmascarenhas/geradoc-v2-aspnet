@@ -1,5 +1,7 @@
 ﻿using Dapper;
-using Geradoc.Domain.Entidades;
+using geradoc_v2.Entities;
+using geradoc_v2.Queries;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace geradoc_v2.Controllers {
@@ -12,10 +14,59 @@ namespace geradoc_v2.Controllers {
 
         //listar todos
         [HttpGet("v1/texts")]
-        public IEnumerable<Texto> GetAll() {
+        public IEnumerable<TextoExibirLista> GetAll() {
             return _context
                    .Connection
-                   .Query<Texto>("SELECT * FROM [Textos]");
+                   .Query<TextoExibirLista>("SELECT * FROM [Textos]");
+        }
+
+        //listar um
+        [HttpGet("v1/text/{id}")]
+        public TextoExibirLista GetOne(Guid id) {
+            return _context
+                   .Connection
+                   .Query<TextoExibirLista>("SELECT * FROM [Textos] WHERE [Id] = @id", new {
+                       id = id
+                   }).FirstOrDefault();
+        }
+
+        //criar um
+        [HttpPost("v1/text")]
+        public object CreateText([FromBody] Textos _texto) {
+            //instanciar um novo texto
+            Textos texto = new Textos(_texto.Titulo, _texto.Texto);
+
+            try {
+                _context.Connection.Execute("spNovoTexto", new {
+                    Id = texto.Id,
+                    Titulo = texto.Titulo,
+                    Texto = texto.Texto,
+                    DataCriacao = texto.DataDeCriacao
+                }, commandType: System.Data.CommandType.StoredProcedure);
+
+                return texto;
+            } catch (IOException ex) {
+                return BadRequest($"Error: {ex.Message}");
+            }
+        }
+
+        //editar um
+        [HttpPut("v1/text/{id}")]
+        public object EditText(Guid id, [FromBody] Textos _texto) {
+            //instanciar um novo texto
+            Textos texto = new Textos(_texto.Titulo, _texto.Texto);
+
+            try {
+                _context.Connection.Execute("spEditarTexto", new {
+                    Id = id,
+                    Titulo = texto.Titulo,
+                    Texto = texto.Texto,
+                }, commandType: System.Data.CommandType.StoredProcedure);
+
+                return texto;
+            } catch (IOException ex) {
+                return BadRequest($"Error: {ex.Message}");
+            }
         }
     }
 }

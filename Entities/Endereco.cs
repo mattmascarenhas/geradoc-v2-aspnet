@@ -1,6 +1,6 @@
 ﻿using geradoc_v2.Entities.Shared;
 
-namespace Geradoc.Domain.Entidades {
+namespace geradoc_v2.Entities{
     public class Endereco: Entity {
         public Endereco(string rua, string numero, string complemento, string bairro, string cidade, string estado, string cep){
             this.Rua = rua;
